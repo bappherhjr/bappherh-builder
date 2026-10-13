@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bappherh Builder</title>
+<meta name="description" content="Bappherh Builder — a visual, browser-based website builder. Built by TheDev001.">
+<meta property="og:title" content="Bappherh Builder"><meta property="og:description" content="Build responsive websites visually and export clean HTML, CSS and JavaScript."><meta property="og:image" content="og-image.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="logo"><img src="logo.svg" alt="" width="24" height="24"><span class="hide-m">Bappherh Builder</span></div>
+    <button id="projName" title="Rename project">Untitled</button>
+    <button class="ib" id="bNew" data-ic="plus" title="New project"></button>
+    <button class="ib" id="bOpen" data-ic="folder" title="Open project"></button>
+    <button class="ib" id="bSave" data-ic="save" title="Save (Ctrl+S)"></button>
+    <span class="vsep"></span>
+    <button class="ib" id="bUndo" data-ic="undo" title="Undo (Ctrl+Z)"></button>
+    <button class="ib" id="bRedo" data-ic="redo" title="Redo (Ctrl+Shift+Z)"></button>
+    <span class="vsep hide-m"></span>
+    <div class="seg" id="modeSeg">
+      <button data-mode="design" class="on" data-ic="layers"><span class="lbl">Design</span></button>
+      <button data-mode="code" data-ic="code"><span class="lbl">Code</span></button>
+    </div>
+    <div class="seg" id="devSeg">
+      <button data-dev="desktop" data-ic="monitor" title="Desktop"></button>
+      <button data-dev="laptop" data-ic="laptop" title="Laptop"></button>
+      <button data-dev="tablet" data-ic="tablet" title="Tablet"></button>
+      <button data-dev="mobile" data-ic="phone" title="Mobile"></button>
+    </div>
+    <span class="grow"></span>
+    <button class="btn" id="bPreview" data-ic="play" title="Preview (Ctrl+P)"><span class="lbl">Preview</span></button>
+    <button class="btn pri" id="bExport" data-ic="download" title="Export"><span class="lbl">Export</span></button>
+    <button class="ib" id="bSettings" data-ic="sliders" title="Settings"></button>
+  </header>
+
+  <main id="workspace">
+    <aside id="left">
+      <div class="sheet-grip"></div>
+      <div class="ptabs" id="ltabs">
+        <button data-lt="elements" data-ic="grid" title="Elements"></button>
+        <button data-lt="layers" data-ic="layers" title="Layers"></button>
+        <button data-lt="pages" data-ic="file" title="Pages"></button>
+        <button data-lt="assets" data-ic="image" title="Assets"></button>
+        <button data-lt="design" data-ic="palette" title="Design tokens"></button>
+      </div>
+      <div class="pane" id="lp-elements"></div>
+      <div class="pane" id="lp-layers" hidden></div>
+      <div class="pane" id="lp-pages" hidden></div>
+      <div class="pane" id="lp-assets" hidden></div>
+      <div class="pane" id="lp-design" hidden></div>
+    </aside>
+
+    <section id="center">
+      <div id="stage">
+        <div id="frameWrap"><iframe id="frame" title="Website canvas" sandbox="allow-same-origin"></iframe></div>
+        <div id="bpChip"><i></i><span id="bpChipTx">Desktop</span></div>
+        <div id="ov">
+          <div id="ovHover" hidden></div>
+          <div id="ovSel" hidden><span class="h e" data-h="e"></span><span class="h s" data-h="s"></span><span class="h se" data-h="se"></span></div>
+          <div id="ovTool" hidden></div>
+          <div id="ovDrop" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <aside id="right">
+      <div class="sheet-grip"></div>
+      <div id="rhead"><span class="ty" id="rTitle">Inspector</span><div class="seg" id="rBp">
+        <button data-dev="desktop" data-ic="monitor" title="Desktop styles"></button>
+        <button data-dev="tablet" data-ic="tablet" title="Tablet styles"></button>
+        <button data-dev="mobile" data-ic="phone" title="Mobile styles"></button></div></div>
+      <div class="bpbar" id="rBpBar"></div>
+      <div class="ptabs" id="rtabs">
+        <button data-rt="content">Content</button><button data-rt="layout">Layout</button><button data-rt="style">Style</button><button data-rt="resp">Responsive</button>
+      </div>
+      <div class="pane" id="rbody"></div>
+    </aside>
+  </main>
+
+  <footer id="statusbar">
+    <span class="sdot" id="saveInd">Saved</span>
+    <span class="grow"></span>
+    <select id="sbDev" aria-label="Device"><option value="desktop">Desktop</option><option value="laptop">Laptop</option><option value="tablet">Tablet</option><option value="mobile">Mobile</option></select>
+    <span id="sbInfo" class="hide-m"></span>
+    <span id="zoomBtns" style="display:flex;gap:2px"><button class="ib sm" id="zOut" data-ic="minus" title="Zoom out"></button><button class="ib sm" id="zIn" data-ic="plus" title="Zoom in"></button></span>
+    <select id="zoomSel" aria-label="Zoom"><option value="0.5">50%</option><option value="0.75">75%</option><option value="1">100%</option><option value="1.25">125%</option><option value="fit">Fit to screen</option></select>
+  </footer>
+
+  <nav id="mbar">
+    <button data-m="elements" data-ic="grid"><span>Add</span></button>
+    <button data-m="layers" data-ic="layers"><span>Layers</span></button>
+    <button data-m="inspect" data-ic="sliders"><span>Edit</span></button>
+    <button data-m="undo" data-ic="undo"><span>Undo</span></button>
+    <button data-m="redo" data-ic="redo"><span>Redo</span></button>
+    <button data-m="preview" data-ic="play"><span>Preview</span></button>
+  </nav>
+  <div id="sheetBack"></div>
+</div>
+
+<section id="code" class="screen" hidden>
+  <div class="cd-top">
+    <div class="seg" id="cdTabs"><button data-ct="html" class="on">HTML</button><button data-ct="css">CSS</button><button data-ct="js">JavaScript</button></div>
+    <span class="grow"></span>
+    <span class="hint" id="cdState"></span>
+    <button class="btn sm" id="cdFind" data-ic="search"><span class="lbl">Search</span></button>
+    <button class="btn sm" id="cdFmt">Format</button>
+    <button class="btn sm" id="cdCopy" data-ic="copy"><span class="lbl">Copy</span></button>
+    <button class="btn sm" id="cdDl" data-ic="download"><span class="lbl">Download</span></button>
+    <button class="btn sm pri" id="cdApply" data-ic="check">Apply</button>
+    <button class="btn sm" id="cdClose" data-ic="x">Design</button>
+  </div>
+  <div id="codeBody"><div class="ed" id="ed"></div><div id="codePrev"></div></div>
+</section>
+
+<section id="prev" class="screen" hidden>
+  <div class="pv-top">
+    <div class="seg" id="pvDev"><button data-pd="desktop" data-ic="monitor" title="Desktop"></button><button data-pd="tablet" data-ic="tablet" title="Tablet"></button><button data-pd="mobile" data-ic="phone" title="Mobile"></button></div>
+    <select id="pvPage" style="width:auto;max-width:160px"></select>
+    <span class="grow"></span>
+    <button class="btn sm" id="pvFull" data-ic="fit"><span class="lbl">Fullscreen</span></button>
+    <button class="btn sm" id="pvTab" data-ic="external"><span class="lbl">New tab</span></button>
+    <button class="btn sm pri" id="pvClose" data-ic="x">Close</button>
+  </div>
+  <div id="pvStage" class="framed"><iframe id="pvFrame" title="Website preview" sandbox="allow-scripts allow-forms allow-popups"></iframe></div>
+</section>
+
+<section id="dash" class="screen" hidden></section>
+<div id="dlgRoot"></div>
+<div id="toasts"></div>
+<div id="ctx" hidden></div>
+<div id="ghost" hidden></div>
+<datalist id="fontlist"></datalist>
+<input type="file" id="fileIn" hidden>
+<script src="app.js"></script>
+</body>
+</html>
